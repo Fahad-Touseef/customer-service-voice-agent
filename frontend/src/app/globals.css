@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --font-serif: "New York", serif;
+  --font-sans: "SF Pro text", system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 1.25rem; /* Adjust as needed */
+}
+ol {
+  list-style-type: decimal;
+  padding-left: 1.25rem; /* Adjust as needed */
+}
+
+li {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}

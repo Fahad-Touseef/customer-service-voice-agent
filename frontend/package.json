@@ -1,0 +1,45 @@
+{
+  "name": "openai-voice-agent-sdk-sample",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev:next": "next dev --turbo",
+    "dev:server": "cd ../server && uv run server.py",
+    "dev": "concurrently \"npm run dev:next\" \"npm run dev:server\"",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.1.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.484.0",
+    "motion": "^12.4.10",
+    "next": "^15.2.4",
+    "openai": "^4.87.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
+    "react-syntax-highlighter": "^15.6.1",
+    "tailwind-merge": "^3.0.2",
+    "wavtools": "^0.1.5"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "concurrently": "^9.1.2",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "optionalDependencies": {
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.0.1",
+    "lightningcss-linux-x64-gnu": "^1.29.1"
+  }
+}
