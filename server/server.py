@@ -2,6 +2,7 @@ import time
 from collections.abc import AsyncIterator
 from logging import getLogger
 from typing import Any, Dict
+from datetime import datetime
 
 from agents import Runner, trace
 from agents.voice import (
@@ -10,7 +11,7 @@ from agents.voice import (
     VoicePipelineConfig,
     VoiceWorkflowBase,
 )
-from app.agent_config import starting_agent
+from app.agent_config import starting_agent, AgentContext
 from app.utils import (
     WebsocketHelper,
     concat_audio_chunks,
@@ -47,6 +48,7 @@ app.add_middleware(
 class Workflow(VoiceWorkflowBase):
     def __init__(self, connection: WebsocketHelper):
         self.connection = connection
+        self.context = AgentContext()  # Maintain context for the session
 
     async def run(self, input_text: str) -> AsyncIterator[str]:
         conversation_history, latest_agent = await self.connection.show_user_input(
@@ -56,6 +58,7 @@ class Workflow(VoiceWorkflowBase):
         output = Runner.run_streamed(
             latest_agent,
             conversation_history,
+            context=self.context,  # Pass context to the agent runner
         )
 
         async for event in output.stream_events():
@@ -75,6 +78,9 @@ async def websocket_endpoint(websocket: WebSocket):
         audio_buffer = []
 
         workflow = Workflow(connection)
+        # Set current_time at session start
+        workflow.context.current_time = datetime.now().isoformat(timespec="seconds")
+
         while True:
             try:
                 message = await websocket.receive_json()

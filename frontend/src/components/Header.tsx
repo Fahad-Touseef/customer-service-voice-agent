@@ -2,7 +2,6 @@
 
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
-import Image from "next/image";
 
 import { AudioPlayback } from "@/components/AudioPlayback";
 import PauseIcon from "@/components/icons/PauseIcon";
@@ -23,97 +22,101 @@ export function Header({
   const showAudioPlayback = playbackFrequencies.length === 5;
 
   return (
-    <div className="flex flex-row gap-2 w-full relative justify-between items-center py-4 px-4 bg-white text-black border-b border-gray-100 dark:bg-gray-900 dark:text-white dark:border-gray-800">
-      <div className="flex flex-row gap-2 items-center px-5">
-        <Image src="/logo.svg" alt="OpenAI Logo" width={24} height={24} className="dark:invert" />
-      </div>
-      {agentName && (
+    <div className="relative w-full py-4 px-4 bg-white text-black border-b border-gray-100 dark:bg-gray-900 dark:text-white dark:border-gray-800 flex items-center">
+      {/* Always render the center container to avoid hydration mismatch */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <div
           className={clsx(
-            "flex text-sm font-semibold border-2 border-gray-100 rounded-full py-3 items-center overflow-hidden dark:border-gray-700 bg-white dark:bg-gray-800 dark:text-white"
+            "flex text-sm font-semibold border-2 border-gray-100 rounded-full py-3 items-center overflow-hidden dark:border-gray-700 bg-white dark:bg-gray-800 dark:text-white",
+            !agentName && "invisible"
           )}
         >
-          <div className="ml-6 mr-4">
-            <AnimatePresence initial={false}>
-              {showAudioPlayback && (
-                <motion.div
-                  initial={{ opacity: 0, width: 0 }}
-                  animate={{ opacity: 1, width: "auto" }}
-                  exit={{ opacity: 0, width: 0 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 8,
-                    mass: 0.5,
-                  }}
-                  style={{ originX: 0 }}
-                  className="flex items-center overflow-hidden"
-                >
-                  <AudioPlayback
-                    playbackFrequencies={playbackFrequencies}
-                    itemClassName="bg-black"
-                    height={24}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-          <motion.div
-            layout="size"
-            initial={{ width: 0 }}
-            animate={{ width: "auto" }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 8,
-              mass: 0.5,
-            }}
-            style={{ originX: 0.5 }}
-            className="overflow-hidden whitespace-nowrap text-center"
-          >
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={agentName}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
+          {/* Only render content if agentName exists */}
+          {agentName && (
+            <>
+              <div className="ml-6 mr-4">
+                <AnimatePresence initial={false}>
+                  {showAudioPlayback && (
+                    <motion.div
+                      initial={{ opacity: 0, width: 0 }}
+                      animate={{ opacity: 1, width: "auto" }}
+                      exit={{ opacity: 0, width: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 8,
+                        mass: 0.5,
+                      }}
+                      style={{ originX: 0 }}
+                      className="flex items-center overflow-hidden"
+                    >
+                      <AudioPlayback
+                        playbackFrequencies={playbackFrequencies}
+                        itemClassName="bg-black"
+                        height={24}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              <motion.div
+                layout="size"
+                initial={{ width: 0 }}
+                animate={{ width: "auto" }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 8,
+                  mass: 0.5,
+                }}
+                style={{ originX: 0.5 }}
+                className="overflow-hidden whitespace-nowrap text-center"
               >
-                {agentName}
-              </motion.span>
-            </AnimatePresence>
-          </motion.div>
-          <div className="mr-6 ml-4">
-            <AnimatePresence initial={false}>
-              {showAudioPlayback && (
-                <motion.div
-                  initial={{ opacity: 0, width: 0 }}
-                  animate={{ opacity: 1, width: "auto" }}
-                  exit={{ opacity: 0, width: 0 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 8,
-                    mass: 0.5,
-                  }}
-                  style={{ originX: 1 }}
-                  className="flex items-center overflow-hidden -pr-2"
-                >
-                  <Button
-                    variant="primary"
-                    size="iconTiny"
-                    onClick={stopPlaying}
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={agentName}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <PauseIcon />
-                  </Button>
-                  {/* <PauseButton stopPlaying={stopPlaying} isPlaying /> */}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                    {agentName}
+                  </motion.span>
+                </AnimatePresence>
+              </motion.div>
+              <div className="mr-6 ml-4">
+                <AnimatePresence initial={false}>
+                  {showAudioPlayback && (
+                    <motion.div
+                      initial={{ opacity: 0, width: 0 }}
+                      animate={{ opacity: 1, width: "auto" }}
+                      exit={{ opacity: 0, width: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 8,
+                        mass: 0.5,
+                      }}
+                      style={{ originX: 1 }}
+                      className="flex items-center overflow-hidden -pr-2"
+                    >
+                      <Button
+                        variant="primary"
+                        size="iconTiny"
+                        onClick={stopPlaying}
+                      >
+                        <PauseIcon />
+                      </Button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </>
+          )}
         </div>
-      )}
-      <div className="flex flex-row gap-2 px-5 items-center">
+      </div>
+      {/* Reset conversation button on far right */}
+      <div className="flex flex-row gap-2 px-5 items-center ml-auto">
         <Button
           onClick={resetConversation}
           aria-label="Start new conversation"
