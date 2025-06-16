@@ -27,4 +27,4 @@ The app simulates an airline's customer support system, where a primary assistan
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.  
-It includes code from the OpenAI and LangGraph documentation (e.g., cookbooks/tutorials), both under the MIT License.
+It includes code from OpenAI and LangGraph documentation examples, both under the MIT License.
