@@ -23,6 +23,7 @@ from app.utils import (
     is_text_output,
     process_inputs,
 )
+from app.prompts import custom_tts_instructions
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse
@@ -120,7 +121,7 @@ async def websocket_endpoint(websocket: WebSocket):
                     workflow=workflow,
                     config=VoicePipelineConfig(
                         tts_settings=TTSModelSettings(
-                            buffer_size=512, transform_data=transform_data
+                            buffer_size=512, transform_data=transform_data, instructions = custom_tts_instructions,
                         )
                     ),
                 ).run(audio_input)

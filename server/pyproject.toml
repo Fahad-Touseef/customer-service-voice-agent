@@ -11,4 +11,5 @@ dependencies = [
     "openai-agents[voice]>=0.0.6",
     "python-dotenv>=1.0.1",
     "uvicorn>=0.34.0",
+    "pytz",
 ]

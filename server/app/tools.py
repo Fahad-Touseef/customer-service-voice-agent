@@ -1,7 +1,8 @@
 import sqlite3
+import os
 from typing import Optional, Union
 from datetime import date, datetime
-# import pytz
+import pytz
 from pydantic import BaseModel
 from agents import function_tool, RunContextWrapper, FileSearchTool
 
@@ -11,7 +12,7 @@ class AgentContext(BaseModel):
     current_time: str | None = None  # Set at session start
     
 
-db = "travel2.sqlite"  
+db = os.path.join("app", "travel2.sqlite")
 VECTOR_STORE_ID = "vs_684b0d5e47a88191b5338fd703285981"
 
 policy_tool = FileSearchTool(
@@ -130,8 +131,8 @@ async def update_ticket_to_new_flight(
         return "Invalid new flight ID provided."
     column_names = [column[0] for column in cursor.description]
     new_flight_dict = dict(zip(column_names, new_flight))
-    # timezone = pytz.timezone("Etc/GMT-3")
-    current_time = datetime.now()    #(tz=timezone)
+    timezone = pytz.timezone("Etc/GMT-3")
+    current_time = datetime.now(tz=timezone)
     departure_time = datetime.strptime(
         new_flight_dict["scheduled_departure"], "%Y-%m-%d %H:%M:%S.%f%z"
     )
